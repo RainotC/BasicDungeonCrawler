@@ -10,7 +10,8 @@ public class EnemyScript : MonoBehaviour
     private bool targetCollision = false;
     private float speed = 2.0f;
     private float thrust = 1.5f;
-    public int health = 5;
+    public float health = 5.0f;
+    private int hitStrength = 20;
 
     void Start()
     {
@@ -77,5 +78,10 @@ public class EnemyScript : MonoBehaviour
     void HideBlood()
     {
         transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public int GetHitStrength()
+    {
+        return hitStrength;
     }
 }
