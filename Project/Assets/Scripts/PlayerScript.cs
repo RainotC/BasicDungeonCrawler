@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -9,14 +11,18 @@ public class PlayerScript : MonoBehaviour
     private float speed = 4.0f;
     Rigidbody2D rb;
     
-    private int health = 100;
+    //private int health = 100;
 
     public bool turnedRight = false;
+    public Image healthFill;
+    private float healthWidth;
 
+    public TextMeshProUGUI mainText;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        healthWidth = healthFill.sprite.rect.width;
     }
 
 
@@ -49,6 +55,16 @@ public class PlayerScript : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy"))
         {
             transform.GetChild(0).gameObject.SetActive(true);
+            healthWidth -= 25;
+            if(healthWidth < 1)
+            {
+                healthFill.enabled = false;
+                mainText.enabled = true;
+                mainText.text = "Game Over";
+            }
+            //Vector2 temp = new Vector2(healthWidth, healthFill.sprite.rect.height); Code from tutorial - makes height wierd
+            Vector2 temp = new Vector2(healthWidth, 40);
+            healthFill.rectTransform.sizeDelta = temp;
             Invoke("HidePlayerBlood", 0.25f);
             
         }
